@@ -1,5 +1,6 @@
 
 import { h, render, Component } from 'preact'; /** @jsx h */
+
 import Router from 'universal-router'
 
 import {Location, QueryEnumParam, QueryParam} from './Location'
@@ -22,12 +23,6 @@ export class TestLocation extends Location {
 }
 
 const LocationTest = (props) => {
-    /*
-    console.log(props)
-    console.log(props.location.path())
-    console.log(props.location.url())
-    console.log(props.location.api())
-    */
     return(
     <div>
         <h1>Location</h1>

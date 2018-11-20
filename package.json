@@ -1,8 +1,11 @@
 {
   "name": "js-location",
-  "version": "1.0.0",
+  "version": "0.0.3",
   "description": "location class to track url and api params",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -15,10 +18,10 @@
   "dependencies": {
     "axios": "^0.18.0",
     "route-parser": "0.0.5",
-    "universal-router": "^6.0.0",
     "urijs": "^1.19.1"
   },
   "devDependencies": {
+    "universal-router": "^6.0.0",
     "babel-eslint": "^8.2.6",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-jsx": "^2.0.0",
@@ -31,6 +34,7 @@
     "eslint-plugin-react": "^7.11.1",
     "preact": "^8.3.1",
     "preact-compat": "^3.18.4",
-    "preact-router": "^2.6.1"
+    "preact-router": "^2.6.1",
+    "rollup-plugin-node-resolve": "^3.4.0"
   }
 }

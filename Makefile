@@ -87,7 +87,7 @@ endif
 # big phonies
 ###############################################################################
 
-.PHONY: all clean clean_dist vendor_size install
+.PHONY: all clean clean_dist vendor_size install dist
 # make the vendor and target bundles
 all: $(COMPRESS_FILES_GZ) 
 
@@ -113,6 +113,10 @@ vendor_size:
 install:
 	cp -R $(INDEX_DIR)/* $(PROD_DIR)
 	chown $(WWW_USER):$(WWW_USER) -R $(PROD_DIR)/*
+
+dist:
+	rollup lib/Location.js -n js-location -c .rollup.config.js 
+	npm publish
 	
 ###############################################################################
 # rules
