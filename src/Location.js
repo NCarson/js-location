@@ -160,6 +160,10 @@ export class Location {
         return this._uri.toString()
     }
 
+    href() {
+        return this._uri.pathname() + this._uri.search()
+    }
+
     pathname() {
         return this._uri.pathname()
     }
