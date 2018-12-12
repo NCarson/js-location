@@ -4,5 +4,6 @@ public/index.html
 public/index.json
 public/dist
 index.json
+bundle.js
 *.swp
 *.gz

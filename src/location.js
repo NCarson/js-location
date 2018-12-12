@@ -96,9 +96,9 @@ export class Location {
     static route = null
     /** valid paramaters in search i.e. QueryParams. Should be set in child class.*/
     static params = {}
-    /** will add default values to url search if not present. Should be set in child class. */
+    /** will add default values to url search if not present */
     static default_params = {}
-    /** will always be added to matched params. Should be set in child class. */
+    /** will always be added to matched params */
     static const_queries = []
 
     //FIXME and what is this ??
@@ -126,12 +126,12 @@ export class Location {
                 search[key] = value
         }
 
-        // add search
-        const new_search = this._setParams(search)
-
         // add matches
         var match = this.constructor.route && Route(this.constructor.route).match(uri.pathname())
         match && this._setParams(match) 
+
+        // add search
+        const new_search = this._setParams(search)
 
         // add constant matches
         this._matches = this._matches.concat(this.constructor.const_queries)
@@ -150,7 +150,7 @@ export class Location {
         const params = this.constructor.params
         var new_search = {}
 
-        Object.keys(search).forEach( key => {
+        for (var key in search) {
             const p = params[key]
             if (!p) return; // if unrecogonized param
 
@@ -175,7 +175,7 @@ export class Location {
                 new_search[key] = val
                 this._matches.push(p.match(val))
             }
-        })
+        }
         return new_search
     }
 
