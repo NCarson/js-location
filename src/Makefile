@@ -12,7 +12,11 @@
 
 BASE_DIR := ..
 TARGET_DIR := $(BASE_DIR)/lib
-TARGETS := $(TARGET_DIR)/location.js
+TARGETS := \
+	$(TARGET_DIR)/location.js \
+	$(TARGET_DIR)/location.js.gz \
+	$(TARGET_DIR)/location.min.js \
+	$(TARGET_DIR)/location.min.js.gz
 
 #EXCL_SRC_DIRS := ./codesplit ./umd
 
