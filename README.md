@@ -6,15 +6,14 @@ Designed to be used with a RESTfull api.
 
 You can use it with universal-router to replace
 packages like react-router. See the [example](https://github.com/NCarson/js-location/blob/master/example/App.js).
-
-And then instead lame `window.location` like locations injected into your props you can get your 
+And then instead of boring `window.location` like locations injected into your props you can get your 
 super-sweet api aware locations, and then remove a lot of crufty code out the view.
 
 If you happen to use Postgres I also built 
 [js-postgrest](https://github.com/NCarson/js-postgrest) to work with this library.
 
 If you happen to use React I made a HOC router that can be used with this
-library [react-withUniversalRouter](react-withUinversalRouter https://github.com/NCarson/react-withUniversalRouter)
+library [react-withUniversalRouter](https://github.com/NCarson/react-withUniversalRouter).
 
 ### Install
 
@@ -69,14 +68,14 @@ var href = "http://example.com/test/24/?q=stuff&o=abc#hash"
 var loc = new TestLocation(href)
 var other = new TestLocation(href+"&s=1")
 
-loc.getMatchedParam('o')) // ParamSortName
-loc.hrefFromSearch({q:'new search'})) // http://example.com/test/24/?q=new+search&o=abc#hash"
-loc.equal(other)) // false
-loc.matches()) // ['order by name', "and name = 'stuff'", "and id=24"]
-loc.url()) // http://example.com/test/24/?q=new+search&o=abc#hash"
-loc.href()) // /test/24/?q=stuff&o=abc#hash"
-loc.pathname()) // /test/24/
-loc.search()) // {q:"stuff", o:"abc"}
+loc.getMatchedParam('o') // ParamSortName
+loc.hrefFromSearch({q:'new search'}) // http://example.com/test/24/?q=new+search&o=abc#hash"
+loc.equal(other) // false
+loc.matches() // ['order by name', "and name = 'stuff'", "and id=24"]
+loc.url() // http://example.com/test/24/?q=new+search&o=abc#hash"
+loc.href() // /test/24/?q=stuff&o=abc#hash"
+loc.pathname() // /test/24/
+loc.search() // {q:"stuff", o:"abc"}
 ```
 
 ## Dev
