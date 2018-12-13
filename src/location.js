@@ -144,7 +144,7 @@ export class Location {
 
         for (var key in search) {
             const p = params[key]
-            if (!p) return; // if unrecogonized param
+            if (!p) return; // if unrecognized param
 
             var val = search[key]
             // if search has same key more than twice take last value
@@ -173,8 +173,8 @@ export class Location {
         return new_search
     }
 
-    /** Did all the params pass validation. 
-     * @param {string} key - key for this.params
+    /** gets matched param by key. Useful for finding matched QueryEnumParam.
+     * @param {string} key - key for this.constructor.params
      * returns {QueryParam}
      */
     getMatchedParam(key) {
@@ -201,7 +201,7 @@ export class Location {
         return href
     }
 
-    /** Compares the string represenetation of the uri.
+    /** Compares the string representation of the uri.
      * @param {Location} other - the other Location instance
      * @returns {bool}
     */
@@ -222,7 +222,7 @@ export class Location {
     }
 
     /** Returns the path and search without the host
-     * @returns {string} URI.pathanme() + URI.search() 
+     * @returns {string} URI.pathname() + URI.search() 
     */
     href() {
         return this._uri.pathname() + this._uri.search() + this._uri.hash()
