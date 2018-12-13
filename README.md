@@ -15,6 +15,8 @@ If you happen to use Postgres I also built
 If you happen to use React I made a HOC router that can be used with this
 library [react-withUniversalRouter](https://github.com/NCarson/react-withUniversalRouter).
 
+![bundlephobia](https://badgen.net/bundlephobia/minzip/js-location)
+
 ### Install
 
 npm i js-location
