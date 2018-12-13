@@ -193,6 +193,7 @@ export class Location {
      * @param {object} search - URI type search object
      * @returns {string}
     */
+    //TODO change name to UrlFromSearch
     hrefFromSearch(search) {
 
         var old_search = this._uri.search(true)
