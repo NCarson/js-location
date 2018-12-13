@@ -1,6 +1,6 @@
 {
   "name": "js-location",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "description": "location class to track url and api params",
   "main": "lib/location.js",
   "scripts": {
@@ -16,7 +16,11 @@
     "route-parser": "0.0.5",
     "urijs": "^1.19.1"
   },
+  "peerDependencies": {
+    "acorn": "^6.0.4"
+  },
   "devDependencies": {
+    "ava": "^0.25.0",
     "babel-eslint": "^8.2.6",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-jsx": "^2.0.0",

@@ -27,10 +27,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 //const pretty = (obj) => JSON.stringify(obj, null, 2); // spacing level = 2
 
-/*****************************************************************************
- *  Params
-/****************************************************************************/
-
 /** Represents some sort of API param that is embedded in a URL
  *  @exports
  *  @param {function} match_func - a function that takes a url and returns the api param
@@ -109,10 +105,6 @@ var QueryEnumParam = exports.QueryEnumParam = function (_QueryParam) {
     return QueryEnumParam;
 }(QueryParam);
 
-/*****************************************************************************
- *  location
-/****************************************************************************/
-
 /** Base object to inherit from
  * @param {string} href - the instance href of the location
  * @param {object} [config={}] 
@@ -140,18 +132,17 @@ var Location = exports.Location = function () {
 
         //FIXME and what is this ??
 
-        /** will add default values to url search if not present */
+        /** (object) will add default values to url search if not present */
 
 
-        /** regex to match paths to. 
-         * Should be set in child class.
-        */
+        /** (string) @see route-parser {@link https://github.com/rcs/route-parser}
+        * Should be set in derived class.*/
         value: function _fixme(obj) {
             return Location.route && (0, _routeParser2.default)(Location.route).reverse(obj);
         }
-        /** will always be added to matched params */
+        /** (array) will always be added to matched params */
 
-        /** valid paramaters in search i.e. QueryParams. Should be set in child class.*/
+        /** (object) valid paramaters in search i.e. QueryParams. Should be set in child class.*/
 
     }]);
 
@@ -165,6 +156,7 @@ var Location = exports.Location = function () {
         this.config.log = config.log || console.log;
 
         this._matches = [];
+        this._matched_params = {};
         this._valid = true;
 
         var uri = new _urijs2.default(href).normalize();
@@ -237,16 +229,17 @@ var Location = exports.Location = function () {
                 }
 
                 if (Array.isArray(p)) {
-                    // if param is enum
+                    // if param is enum its an array
                     p.forEach(function (pp) {
                         if (val === pp.key) {
                             // if this param matches enum
                             new_search[key] = val;
                             _this2._matches.push(pp.match(val));
+                            _this2._matched_params[key] = pp;
                         }
                     });
                 } else {
-                    // else
+                    // else its scalar
                     if (!p.validate(val)) {
                         // if it does not pass validation
                         this._valid = false;
@@ -254,9 +247,21 @@ var Location = exports.Location = function () {
                     }
                     new_search[key] = val;
                     this._matches.push(p.match(val));
+                    this._matched_params[key] = p;
                 }
             }
             return new_search;
+        }
+
+        /** Did all the params pass validation. 
+         * @param {string} key - key for this.params
+         * returns {QueryParam}
+         */
+
+    }, {
+        key: 'getMatchedParam',
+        value: function getMatchedParam(key) {
+            return this._matched_params[key];
         }
 
         /** Did all the params pass validation. 
@@ -267,17 +272,6 @@ var Location = exports.Location = function () {
         key: 'isValid',
         value: function isValid() {
             return this._valid;
-        }
-
-        //TODO get rid of this
-
-    }, {
-        key: 'cloneFromSearch',
-        value: function cloneFromSearch(search) {
-            var old_search = this._uri.search();
-            Object.assign(old_search, search);
-            var href = this._uri.clone().search(old_search).normalize().toString();
-            return this.constructor(href);
         }
 
         /** 
@@ -332,7 +326,7 @@ var Location = exports.Location = function () {
     }, {
         key: 'href',
         value: function href() {
-            return this._uri.pathname() + this._uri.search();
+            return this._uri.pathname() + this._uri.search() + this._uri.hash();
         }
 
         /** @returns {string} URI.pathname() */

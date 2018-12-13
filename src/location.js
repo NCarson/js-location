@@ -3,10 +3,6 @@ import Route from 'route-parser'
 
 //const pretty = (obj) => JSON.stringify(obj, null, 2); // spacing level = 2
 
-/*****************************************************************************
- *  Params
-/****************************************************************************/
-
 /** Represents some sort of API param that is embedded in a URL
  *  @exports
  *  @param {function} match_func - a function that takes a url and returns the api param
@@ -66,10 +62,6 @@ export class QueryEnumParam  extends QueryParam {
     }
 }
 
-/*****************************************************************************
- *  location
-/****************************************************************************/
-
 /** Base object to inherit from
  * @param {string} href - the instance href of the location
  * @param {object} [config={}] 
@@ -90,15 +82,14 @@ export class QueryEnumParam  extends QueryParam {
  */
 export class Location {
 
-    /** regex to match paths to. 
-     * Should be set in child class.
-    */
+    /** (string) @see route-parser {@link https://github.com/rcs/route-parser}
+    * Should be set in derived class.*/
     static route = null
-    /** valid paramaters in search i.e. QueryParams. Should be set in child class.*/
+    /** (object) valid paramaters in search i.e. QueryParams. Should be set in child class.*/
     static params = {}
-    /** will add default values to url search if not present */
+    /** (object) will add default values to url search if not present */
     static default_params = {}
-    /** will always be added to matched params */
+    /** (array) will always be added to matched params */
     static const_queries = []
 
     //FIXME and what is this ??
@@ -113,6 +104,7 @@ export class Location {
         this.config.log = config.log || console.log
 
         this._matches = []
+        this._matched_params = {}
         this._valid = true
 
         var uri = new URI(href).normalize()
@@ -160,23 +152,33 @@ export class Location {
                 val = val.slice(-1)[0] 
             }
 
-            if (Array.isArray(p)) { // if param is enum
+            if (Array.isArray(p)) { // if param is enum its an array
                 p.forEach( pp => {
                     if (val === pp.key) { // if this param matches enum
                         new_search[key] = val
                         this._matches.push(pp.match(val))
+                        this._matched_params[key] = pp
                     }
                 })
-            } else { // else
+            } else { // else its scalar
                 if (!p.validate(val)) { // if it does not pass validation
                     this._valid = false
                     return 
                 }
                 new_search[key] = val
                 this._matches.push(p.match(val))
+                this._matched_params[key] = p
             }
         }
         return new_search
+    }
+
+    /** Did all the params pass validation. 
+     * @param {string} key - key for this.params
+     * returns {QueryParam}
+     */
+    getMatchedParam(key) {
+        return this._matched_params[key]
     }
 
     /** Did all the params pass validation. 
@@ -184,14 +186,6 @@ export class Location {
      */
     isValid() {
         return this._valid
-    }
-
-    //TODO get rid of this
-    cloneFromSearch(search) {
-        var old_search = this._uri.search()
-        Object.assign(old_search, search)
-        var href = this._uri.clone().search(old_search).normalize().toString()
-        return this.constructor(href)
     }
 
     /** 
@@ -231,7 +225,7 @@ export class Location {
      * @returns {string} URI.pathanme() + URI.search() 
     */
     href() {
-        return this._uri.pathname() + this._uri.search()
+        return this._uri.pathname() + this._uri.search() + this._uri.hash()
     }
 
     /** @returns {string} URI.pathname() */
